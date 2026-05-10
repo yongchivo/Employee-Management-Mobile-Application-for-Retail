@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useLanguage } from '../context/LanguageContext';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function LoginScreen({ navigation }) {
   const { t, language, toggleLanguage } = useLanguage();
@@ -17,8 +19,10 @@ export default function LoginScreen({ navigation }) {
     }
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigation.replace('Home');
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        email: cred.user.email,
+      }, {merge: true});
     } catch (error) {
       Alert.alert('Error', t('errorLogin'));
     } finally {

@@ -5,16 +5,33 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { onAuthStateChanged } from 'firebase/auth';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
-import { auth } from './firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './firebase';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ScheduleScreen from './screens/ScheduleScreen';
+import DocumentsScreen from './screens/DocumentScreen';
+import AdminScreen from './screens/AdminScreen';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MainTabs() {
   const { t } = useLanguage();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkRole = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        setIsAdmin(userDoc.data()?.role === 'admin');
+      }
+    };
+    checkRole();
+  }, []);
+
   return (
     <Tab.Navigator screenOptions={{
       headerShown: false,
@@ -22,25 +39,20 @@ function MainTabs() {
       tabBarInactiveTintColor: '#aaa',
       tabBarStyle: { paddingBottom: 8, height: 60 },
     }}>
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: t('tabFichaje'),
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>⏱️</Text>,
-        }}
-      />
-      <Tab.Screen
-        name="ScheduleTab"
-        component={ScheduleScreen}
-        options={{
-          tabBarLabel: t('tabSchedule'),
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>📅</Text>,
-        }}
-      />
+      <Tab.Screen name="HomeTab" component={HomeScreen}
+        options={{ tabBarLabel: t('tabFichaje'), tabBarIcon: () => <Text style={{ fontSize: 20 }}>⏱️</Text> }} />
+      <Tab.Screen name="ScheduleTab" component={ScheduleScreen}
+        options={{ tabBarLabel: t('tabSchedule'), tabBarIcon: () => <Text style={{ fontSize: 20 }}>📅</Text> }} />
+      <Tab.Screen name="DocumentsTab" component={DocumentsScreen}
+        options={{ tabBarLabel: t('tabDocs'), tabBarIcon: () => <Text style={{ fontSize: 20 }}>📄</Text> }} />
+      {isAdmin && (
+        <Tab.Screen name="AdminTab" component={AdminScreen}
+          options={{ tabBarLabel: t('tabAdmin'), tabBarIcon: () => <Text style={{ fontSize: 20 }}>👑</Text> }} />
+      )}
     </Tab.Navigator>
   );
 }
+
 
 export default function App() {
   const [user, setUser] = useState(undefined);

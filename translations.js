@@ -24,6 +24,15 @@ export const translations = {
     restDay: 'Descanso',
     lunes: 'Lunes', martes: 'Martes', miercoles: 'Miércoles',
     jueves: 'Jueves', viernes: 'Viernes', sabado: 'Sábado', domingo: 'Domingo',
+    documentsTitle: 'Documentos',
+    upload: 'Subir',
+    noDocs: 'Sin documentos todavía',
+    open: 'Abrir',
+    tabDocs: 'Documentos',
+    adminTitle: 'Panel de Admin',
+    noEmployees: 'Sin empleados registrados',
+    tabAdmin: 'Admin',
+
   },
   en: {
     hello: 'Hello',
@@ -50,5 +59,13 @@ export const translations = {
     restDay: 'Day off',
     lunes: 'Monday', martes: 'Tuesday', miercoles: 'Wednesday',
     jueves: 'Thursday', viernes: 'Friday', sabado: 'Saturday', domingo: 'Sunday',
+    documentsTitle: 'Documents',
+    upload: 'Upload',
+    noDocs: 'No documents yet',
+    open: 'Open',
+    tabDocs: 'Documents',
+    adminTitle: 'Admin Panel',
+    noEmployees: 'No employees registered',
+    tabAdmin: 'Admin',
   }
 };
