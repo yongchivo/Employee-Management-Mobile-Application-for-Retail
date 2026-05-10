@@ -18,6 +18,12 @@ export const translations = {
     entrada: 'Entrada',
     salida: 'Salida',
     noRecords: 'Sin registros hoy',
+    tabFichaje: 'Fichaje',
+    tabSchedule: 'Horario',
+    scheduleTitle: 'Mi horario semanal',
+    restDay: 'Descanso',
+    lunes: 'Lunes', martes: 'Martes', miercoles: 'Miércoles',
+    jueves: 'Jueves', viernes: 'Viernes', sabado: 'Sábado', domingo: 'Domingo',
   },
   en: {
     hello: 'Hello',
@@ -38,5 +44,11 @@ export const translations = {
     entrada: 'Clock In',
     salida: 'Clock Out',
     noRecords: 'No records today',
+    tabFichaje: 'Time Track',
+    tabSchedule: 'Schedule',
+    scheduleTitle: 'My weekly schedule',
+    restDay: 'Day off',
+    lunes: 'Monday', martes: 'Tuesday', miercoles: 'Wednesday',
+    jueves: 'Thursday', viernes: 'Friday', sabado: 'Saturday', domingo: 'Sunday',
   }
 };
