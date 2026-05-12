@@ -32,6 +32,12 @@ export const translations = {
     adminTitle: 'Panel de Admin',
     noEmployees: 'Sin empleados registrados',
     tabAdmin: 'Admin',
+    editSchedule: 'Editar horario',
+    scheduleSaved: 'Horario guardado correctamente',
+    back: 'Volver',
+    save: 'Guardar',
+    startTime: 'Entrada',
+    endTime: 'Salida',
 
   },
   en: {
@@ -67,5 +73,12 @@ export const translations = {
     adminTitle: 'Admin Panel',
     noEmployees: 'No employees registered',
     tabAdmin: 'Admin',
+    editSchedule: 'Edit schedule',
+    scheduleSaved: 'Schedule saved successfully',
+    back: 'Back',
+    save: 'Save',
+    startTime: 'Start',
+    endTime: 'End',
+
   }
 };

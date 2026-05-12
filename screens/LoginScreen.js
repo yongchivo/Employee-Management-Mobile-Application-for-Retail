@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useLanguage } from '../context/LanguageContext';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function LoginScreen({ navigation }) {
@@ -17,18 +17,24 @@ export default function LoginScreen({ navigation }) {
       Alert.alert('Error', t('errorFields'));
       return;
     }
-    setLoading(true);
+  setLoading(true);
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
     try {
-      const cred = await signInWithEmailAndPassword(auth, email, password);
+      await updateDoc(doc(db, 'users', cred.user.uid), {
+        email: cred.user.email,
+      });
+    } catch {
       await setDoc(doc(db, 'users', cred.user.uid), {
         email: cred.user.email,
-      }, {merge: true});
-    } catch (error) {
-      Alert.alert('Error', t('errorLogin'));
-    } finally {
-      setLoading(false);
+      }, { merge: true });
     }
-  };
+  } catch (error) {
+    Alert.alert('Error', t('errorLogin'));
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <View style={styles.container}>

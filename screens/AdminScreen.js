@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity } from 'react-native';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function AdminScreen() {
+export default function AdminScreen({navigation}) {
   const { t, language } = useLanguage();
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -102,9 +102,18 @@ export default function AdminScreen() {
                         {f.type === 'entrada' ? '↗' : '↙'} {f.hour}
                       </Text>
                     ))
-                  : <Text style={styles.noRecords}>{t('noRecords')}</Text>
+                        : <Text style={styles.noRecords}>{t('noRecords')}</Text>
                 }
-              </View>
+                    <TouchableOpacity
+                        style={styles.editBtn}
+                        onPress={() => navigation.navigate('EditSchedule', {
+                        employeeId: emp.id,
+                        employeeName: emp.name
+                        })}
+                    >
+                        <Text style={styles.editBtnText}>✏️ {t('editSchedule')}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
           ))
       }
@@ -142,4 +151,9 @@ const styles = StyleSheet.create({
   entradaText: { color: '#4CAF50' },
   salidaText: { color: '#e53935' },
   noRecords: { color: '#bbb', fontSize: 13, fontStyle: 'italic' },
+  editBtn: {
+    marginTop: 10, padding: 10, borderRadius: 8,
+    borderWidth: 1, borderColor: '#4CAF50', alignItems: 'center',
+  },
+  editBtnText: { color: '#4CAF50', fontWeight: '600', fontSize: 13 },
 });
