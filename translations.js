@@ -38,6 +38,9 @@ export const translations = {
     save: 'Guardar',
     startTime: 'Entrada',
     endTime: 'Salida',
+    scheduleConfigured: 'Horario configurado',
+    scheduleNotConfigured: 'Sin configurar',
+
 
   },
   en: {
@@ -79,6 +82,7 @@ export const translations = {
     save: 'Save',
     startTime: 'Start',
     endTime: 'End',
-
+    scheduleConfigured: 'Schedule configured',
+    scheduleNotConfigured: 'Not configured',
   }
 };
